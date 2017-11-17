@@ -1,0 +1,32 @@
+$color1: #242582;
+$color2: #553D67;
+$color3: #F64C72;
+$color4: #99738E;
+$color5: #2F2FA2;
+
+body{
+    background-color: lighten($color4, 40%);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.all{
+    height: 100%;
+}
+
+
+
+header{
+    background-color: $color2;
+    height: 90px;
+    color: #FFFFFF;
+    text-align: center;
+    align-self: flex-start;
+}
+
+footer{
+    background-color: $color2;
+    color: #FFFFFF;
+    text-align: center;
+}
