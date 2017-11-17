@@ -116,8 +116,112 @@ document.addEventListener('DOMContentLoaded', function () {
         return Header;
     }(_react2.default.Component);
 
-    var Footer = function (_React$Component2) {
-        _inherits(Footer, _React$Component2);
+    var Leader = function (_React$Component2) {
+        _inherits(Leader, _React$Component2);
+
+        function Leader() {
+            _classCallCheck(this, Leader);
+
+            return _possibleConstructorReturn(this, (Leader.__proto__ || Object.getPrototypeOf(Leader)).apply(this, arguments));
+        }
+
+        _createClass(Leader, [{
+            key: 'render',
+            value: function render() {
+                return _react2.default.createElement(
+                    'tr',
+                    null,
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        _react2.default.createElement('img', { src: this.props.img, id: 'img' })
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        this.props.name
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        this.props.recentPoints
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        this.props.pointsAll
+                    ),
+                    _react2.default.createElement(
+                        'th',
+                        null,
+                        this.props.recentUpdate
+                    )
+                );
+            }
+        }]);
+
+        return Leader;
+    }(_react2.default.Component);
+
+    var LeaderBoard = function (_React$Component3) {
+        _inherits(LeaderBoard, _React$Component3);
+
+        function LeaderBoard(props) {
+            _classCallCheck(this, LeaderBoard);
+
+            var _this3 = _possibleConstructorReturn(this, (LeaderBoard.__proto__ || Object.getPrototypeOf(LeaderBoard)).call(this, props));
+
+            _this3.state = {
+                leaders: []
+            };
+            return _this3;
+        }
+
+        _createClass(LeaderBoard, [{
+            key: 'componentDidMount',
+            value: function componentDidMount() {
+                var _this4 = this;
+
+                var apiLeaders = ' https://fcctop100.herokuapp.com/api/fccusers/top/recent';
+
+                fetch(apiLeaders).then(function (r) {
+                    return r.json();
+                }).then(function (data) {
+                    var objects = data;
+
+                    _this4.setState({
+                        leaders: objects
+                    });
+                });
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var leader = this.state.leaders.map(function (leader) {
+                    return _react2.default.createElement(Leader, {
+                        name: leader.username,
+                        pointsAll: leader.alltime,
+                        recentPoints: leader.recent,
+                        recentUpdate: leader.lastUpdate,
+                        img: leader.img });
+                });
+                return _react2.default.createElement(
+                    'table',
+                    null,
+                    _react2.default.createElement(
+                        'tbody',
+                        null,
+                        leader
+                    )
+                );
+            }
+        }]);
+
+        return LeaderBoard;
+    }(_react2.default.Component);
+
+    var Footer = function (_React$Component4) {
+        _inherits(Footer, _React$Component4);
 
         function Footer() {
             _classCallCheck(this, Footer);
@@ -148,8 +252,8 @@ document.addEventListener('DOMContentLoaded', function () {
         return Footer;
     }(_react2.default.Component);
 
-    var App = function (_React$Component3) {
-        _inherits(App, _React$Component3);
+    var App = function (_React$Component5) {
+        _inherits(App, _React$Component5);
 
         function App() {
             _classCallCheck(this, App);
@@ -164,6 +268,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'div',
                     { className: 'all' },
                     _react2.default.createElement(Header, null),
+                    _react2.default.createElement(LeaderBoard, null),
                     _react2.default.createElement(Footer, null)
                 );
             }
