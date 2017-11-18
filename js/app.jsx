@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
             super();
             this.state = {
                 sort: false,
+                sortRecent:false,
             }
         }
 
@@ -31,12 +32,31 @@ document.addEventListener('DOMContentLoaded', function() {
            }
 
 
+           if (prev.sortRecent === false && this.state.sortRecent === true) {
+                 this.props.upDateRecent(true);
+
+             } else if (prev.sortRecent === true && this.state.sortRecent === false) {
+                 this.props.upDateRecent(false);
+                 
+
+             }
         }
+
+
 
         handleClick = (e) => {
             e.preventDefault();
             this.setState({
                 sort: true,
+                sortRecent:false,
+            });
+        }
+
+        handleClickRecent = (e) => {
+            e.preventDefault();
+            this.setState({
+                sortRecent: true,
+                sort:false,
             });
         }
         render() {
@@ -46,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      <th></th>
                      <th>Name</th>
                      <th
-                         >Points in past 30days</th>
+                         onClick={this.handleClickRecent}>Points in past 30days</th>
                      <th
                          onClick={this.handleClick}>All time points</th>
                 </tr>
@@ -110,6 +130,18 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log(sortedAllPoints);
         }
 
+        sortRecentObjects = (isSort) => {
+            console.log("is sorted recent points");
+            const sortedRecentPoints = this.state.leaders.sort((a,b) => {
+                return b.recent - a.recent;
+
+            });
+            this.setState({
+                leaders: sortedRecentPoints,
+            })
+            console.log(sortedRecentPoints);
+        }
+
 
         render() {
             let count = 0;
@@ -129,7 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
             return  <table>
             <THeader
-                upDate={this.sortObjects}/>
+                upDate={this.sortObjects}
+                upDateRecent={this.sortRecentObjects}/>
                 <tbody>
                 {leader}
                 </tbody>

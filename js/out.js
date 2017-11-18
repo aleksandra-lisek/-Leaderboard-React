@@ -9647,12 +9647,22 @@ document.addEventListener('DOMContentLoaded', function () {
             _this2.handleClick = function (e) {
                 e.preventDefault();
                 _this2.setState({
-                    sort: true
+                    sort: true,
+                    sortRecent: false
+                });
+            };
+
+            _this2.handleClickRecent = function (e) {
+                e.preventDefault();
+                _this2.setState({
+                    sortRecent: true,
+                    sort: false
                 });
             };
 
             _this2.state = {
-                sort: false
+                sort: false,
+                sortRecent: false
             };
             return _this2;
         }
@@ -9664,6 +9674,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     this.props.upDate(true);
                 } else if (prev.sort === true && this.state.sort === false) {
                     this.props.upDate(false);
+                }
+
+                if (prev.sortRecent === false && this.state.sortRecent === true) {
+                    this.props.upDateRecent(true);
+                } else if (prev.sortRecent === true && this.state.sortRecent === false) {
+                    this.props.upDateRecent(false);
                 }
             }
         }, {
@@ -9688,7 +9704,8 @@ document.addEventListener('DOMContentLoaded', function () {
                         ),
                         _react2.default.createElement(
                             'th',
-                            null,
+                            {
+                                onClick: this.handleClickRecent },
                             'Points in past 30days'
                         ),
                         _react2.default.createElement(
@@ -9776,6 +9793,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(sortedAllPoints);
             };
 
+            _this4.sortRecentObjects = function (isSort) {
+                console.log("is sorted recent points");
+                var sortedRecentPoints = _this4.state.leaders.sort(function (a, b) {
+                    return b.recent - a.recent;
+                });
+                _this4.setState({
+                    leaders: sortedRecentPoints
+                });
+                console.log(sortedRecentPoints);
+            };
+
             _this4.state = {
                 leaders: []
             };
@@ -9820,7 +9848,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     'table',
                     null,
                     _react2.default.createElement(THeader, {
-                        upDate: this.sortObjects }),
+                        upDate: this.sortObjects,
+                        upDateRecent: this.sortRecentObjects }),
                     _react2.default.createElement(
                         'tbody',
                         null,
