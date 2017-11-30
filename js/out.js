@@ -9678,6 +9678,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, {
             key: 'render',
             value: function render() {
+
                 return _react2.default.createElement(
                     'thead',
                     null,
@@ -9697,16 +9698,17 @@ document.addEventListener('DOMContentLoaded', function () {
                         ),
                         _react2.default.createElement(
                             'th',
-                            {
+                            { className: 'recent-th',
                                 onClick: this.handleClick },
                             'Points in past 30days'
                         ),
                         _react2.default.createElement(
                             'th',
-                            {
+                            { className: 'all-time-th',
                                 onClick: this.handleClick },
                             'All time points'
-                        )
+                        ),
+                        _react2.default.createElement('th', null)
                     )
                 );
             }
@@ -9731,32 +9733,32 @@ document.addEventListener('DOMContentLoaded', function () {
                     'tr',
                     null,
                     _react2.default.createElement(
-                        'th',
+                        'td',
                         null,
                         this.props.count
                     ),
                     _react2.default.createElement(
-                        'th',
+                        'td',
                         null,
                         _react2.default.createElement('img', { src: this.props.img, id: 'img' })
                     ),
                     _react2.default.createElement(
-                        'th',
+                        'td',
                         null,
                         this.props.name
                     ),
                     _react2.default.createElement(
-                        'th',
+                        'td',
                         null,
                         this.props.recentPoints
                     ),
                     _react2.default.createElement(
-                        'th',
+                        'td',
                         null,
                         this.props.pointsAll
                     ),
                     _react2.default.createElement(
-                        'th',
+                        'td',
                         null,
                         this.props.recentUpdate
                     )
@@ -9782,8 +9784,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 _this4.setState({
                     leaders: sortedAllPoints
                 });
-
-                console.log(sortedAllPoints);
             };
 
             _this4.sortRecent = function (recent) {
@@ -9796,9 +9796,6 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             _this4.setStateFunction = function (recent, alltime) {
-                // console.log("this recent bool: " + recent);
-                // console.log("this alltime bool: " + alltime);
-
                 if (recent === true && alltime === false) {
                     _this4.sortRecent(recent);
                 } else if (recent === false && alltime === true) {

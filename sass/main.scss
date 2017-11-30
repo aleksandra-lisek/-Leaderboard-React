@@ -4,34 +4,78 @@ $color3: #F64C72;
 $color4: #99738E;
 $color5: #2F2FA2;
 
-body{
-    background-color: lighten($color4, 40%);
+body {
+    background-color: lighten($color4, 48%);
     margin: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    font-family: 'Oswald', sans-serif;
 }
-.all{
+
+.all {
     height: 100%;
 }
 
-img{
+img {
     width: 50px;
     height: 50px;
 }
 
-
-
-header{
-    background-color: $color2;
+header {
+    background-color: lighten($color2, 10%);
     height: 90px;
+    width: 100vw;
+    font-size: 25px;
     color: #FFFFFF;
     text-align: center;
     align-self: flex-start;
+    font-family: 'Montserrat', sans-serif;
 }
 
-footer{
-    background-color: $color2;
+.all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+table {
+    margin: 50px;
+    padding: 5px;
+    text-align: center;
+    border-collapse: collapse;
+
+    thead {
+        background-color: lighten($color4, 40%);
+        font-size: 20px;
+
+        .recent-th {
+            background-color: $color4;
+        }
+    }
+
+    tbody {
+        tr {
+            &:hover {
+                transform: scale(1.02);
+                background-color: lighten($color5, 37%);
+            }
+        }
+    }
+
+    td,
+    th {
+        padding: 8px;
+    }
+
+    td {}
+}
+
+footer {
+    background-color: lighten($color2, 10%);
     color: #FFFFFF;
     text-align: center;
+    width: 100vw;
+    font-family: 'Montserrat', sans-serif;
 }

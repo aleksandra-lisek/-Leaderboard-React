@@ -54,15 +54,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         render() {
+
             return <thead>
                 <tr>
                      <th>#</th>
                      <th></th>
                      <th>Name</th>
-                     <th
+                     <th className= "recent-th"
                          onClick={this.handleClick}>Points in past 30days</th>
-                     <th
+                     <th className= "all-time-th"
                          onClick={this.handleClick}>All time points</th>
+                      <th></th>
                 </tr>
                 </thead>
 
@@ -73,16 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
     class Leader extends React.Component {
         render() {
             return  <tr>
-                        <th>
+                        <td>
                         {this.props.count}
-                        </th>
-                        <th>
+                    </td>
+                        <td>
                             <img src={this.props.img} id="img"/>
-                        </th>
-                        <th>{this.props.name}</th>
-                        <th>{this.props.recentPoints}</th>
-                        <th>{this.props.pointsAll}</th>
-                        <th>{this.props.recentUpdate}</th>
+                        </td>
+                        <td>{this.props.name}</td>
+                        <td>{this.props.recentPoints}</td>
+                        <td>{this.props.pointsAll}</td>
+                        <td>{this.props.recentUpdate}</td>
                     </tr>
 
         }
@@ -120,9 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.setState({
                     leaders: sortedAllPoints,
                 });
-
-
-            console.log(sortedAllPoints);
         }
 
         sortRecent = (recent)=> {
@@ -138,9 +137,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         setStateFunction = (recent, alltime)=>{
-                // console.log("this recent bool: " + recent);
-                // console.log("this alltime bool: " + alltime);
-
             if(recent === true && alltime === false){
                 this.sortRecent(recent);
             }else if(recent === false && alltime === true){
