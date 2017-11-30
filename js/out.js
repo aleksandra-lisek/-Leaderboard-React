@@ -9646,23 +9646,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
             _this2.handleClick = function (e) {
                 e.preventDefault();
-                _this2.setState({
-                    sort: true,
-                    sortRecent: false
-                });
-            };
-
-            _this2.handleClickRecent = function (e) {
-                e.preventDefault();
-                _this2.setState({
-                    sortRecent: true,
-                    sort: false
-                });
+                if (_this2.state.sort === false) {
+                    _this2.setState({
+                        sort: true,
+                        sortRecent: false
+                    });
+                } else {
+                    _this2.setState({
+                        sort: false,
+                        sortRecent: true
+                    });
+                }
             };
 
             _this2.state = {
                 sort: false,
-                sortRecent: false
+                sortRecent: true
             };
             return _this2;
         }
@@ -9671,15 +9670,9 @@ document.addEventListener('DOMContentLoaded', function () {
             key: 'componentDidUpdate',
             value: function componentDidUpdate(prevProps, prev) {
                 if (prev.sort === false && this.state.sort === true) {
-                    this.props.upDate(true);
+                    this.props.upDate(false, true);
                 } else if (prev.sort === true && this.state.sort === false) {
-                    this.props.upDate(false);
-                }
-
-                if (prev.sortRecent === false && this.state.sortRecent === true) {
-                    this.props.upDateRecent(true);
-                } else if (prev.sortRecent === true && this.state.sortRecent === false) {
-                    this.props.upDateRecent(false);
+                    this.props.upDate(true, false);
                 }
             }
         }, {
@@ -9705,7 +9698,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         _react2.default.createElement(
                             'th',
                             {
-                                onClick: this.handleClickRecent },
+                                onClick: this.handleClick },
                             'Points in past 30days'
                         ),
                         _react2.default.createElement(
@@ -9782,26 +9775,35 @@ document.addEventListener('DOMContentLoaded', function () {
 
             var _this4 = _possibleConstructorReturn(this, (LeaderBoard.__proto__ || Object.getPrototypeOf(LeaderBoard)).call(this, props));
 
-            _this4.sortObjects = function (isSort) {
-                console.log("is sorted");
+            _this4.sortAllTime = function (alltime) {
                 var sortedAllPoints = _this4.state.leaders.sort(function (a, b) {
                     return b.alltime - a.alltime;
                 });
                 _this4.setState({
                     leaders: sortedAllPoints
                 });
+
                 console.log(sortedAllPoints);
             };
 
-            _this4.sortRecentObjects = function (isSort) {
-                console.log("is sorted recent points");
+            _this4.sortRecent = function (recent) {
                 var sortedRecentPoints = _this4.state.leaders.sort(function (a, b) {
                     return b.recent - a.recent;
                 });
                 _this4.setState({
                     leaders: sortedRecentPoints
                 });
-                console.log(sortedRecentPoints);
+            };
+
+            _this4.setStateFunction = function (recent, alltime) {
+                // console.log("this recent bool: " + recent);
+                // console.log("this alltime bool: " + alltime);
+
+                if (recent === true && alltime === false) {
+                    _this4.sortRecent(recent);
+                } else if (recent === false && alltime === true) {
+                    _this4.sortAllTime(alltime);
+                }
             };
 
             _this4.state = {
@@ -9848,8 +9850,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     'table',
                     null,
                     _react2.default.createElement(THeader, {
-                        upDate: this.sortObjects,
-                        upDateRecent: this.sortRecentObjects }),
+                        upDate: this.setStateFunction }),
                     _react2.default.createElement(
                         'tbody',
                         null,

@@ -18,47 +18,41 @@ document.addEventListener('DOMContentLoaded', function() {
             super();
             this.state = {
                 sort: false,
-                sortRecent:false,
+                sortRecent:true,
             }
         }
 
         componentDidUpdate(prevProps, prev) {
-            if (prev.sort === false && this.state.sort === true) {
-               this.props.upDate(true);
+            if (prev.sort === false && this.state.sort === true ) {
+               this.props.upDate(false, true);
 
-           } else if (prev.sort === true && this.state.sort === false) {
-               this.props.upDate(false);
+
+           } else if (prev.sort === true && this.state.sort === false ) {
+               this.props.upDate(true, false);
+
 
            }
 
-
-           if (prev.sortRecent === false && this.state.sortRecent === true) {
-                 this.props.upDateRecent(true);
-
-             } else if (prev.sortRecent === true && this.state.sortRecent === false) {
-                 this.props.upDateRecent(false);
-                 
-
-             }
         }
 
 
 
         handleClick = (e) => {
             e.preventDefault();
-            this.setState({
-                sort: true,
-                sortRecent:false,
-            });
+            if(this.state.sort === false){
+                this.setState({
+                    sort: true,
+                    sortRecent: false,
+                });
+            }else{
+                this.setState({
+                    sort: false,
+                    sortRecent: true,
+                });
+            }
+
         }
 
-        handleClickRecent = (e) => {
-            e.preventDefault();
-            this.setState({
-                sortRecent: true,
-                sort:false,
-            });
-        }
         render() {
             return <thead>
                 <tr>
@@ -66,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
                      <th></th>
                      <th>Name</th>
                      <th
-                         onClick={this.handleClickRecent}>Points in past 30days</th>
+                         onClick={this.handleClick}>Points in past 30days</th>
                      <th
                          onClick={this.handleClick}>All time points</th>
                 </tr>
@@ -118,28 +112,41 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
 
-        sortObjects = (isSort) => {
-            console.log("is sorted");
+        sortAllTime = (alltime) => {
             const sortedAllPoints = this.state.leaders.sort((a,b) => {
                 return b.alltime - a.alltime;
 
             });
-            this.setState({
-                leaders: sortedAllPoints,
-            })
+                this.setState({
+                    leaders: sortedAllPoints,
+                });
+
+
             console.log(sortedAllPoints);
         }
 
-        sortRecentObjects = (isSort) => {
-            console.log("is sorted recent points");
+        sortRecent = (recent)=> {
             const sortedRecentPoints = this.state.leaders.sort((a,b) => {
                 return b.recent - a.recent;
 
             });
-            this.setState({
-                leaders: sortedRecentPoints,
-            })
-            console.log(sortedRecentPoints);
+                this.setState({
+                    leaders: sortedRecentPoints,
+                });
+
+
+        }
+
+        setStateFunction = (recent, alltime)=>{
+                // console.log("this recent bool: " + recent);
+                // console.log("this alltime bool: " + alltime);
+
+            if(recent === true && alltime === false){
+                this.sortRecent(recent);
+            }else if(recent === false && alltime === true){
+                this.sortAllTime(alltime);
+            }
+
         }
 
 
@@ -161,8 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             return  <table>
             <THeader
-                upDate={this.sortObjects}
-                upDateRecent={this.sortRecentObjects}/>
+                upDate={this.setStateFunction}/>
                 <tbody>
                 {leader}
                 </tbody>
