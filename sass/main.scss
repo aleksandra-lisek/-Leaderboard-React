@@ -59,7 +59,6 @@ table {
         tr {
             &:hover {
                 transform: scale(1.02);
-                background-color: lighten($color5, 37%);
             }
         }
     }
@@ -68,9 +67,24 @@ table {
     th {
         padding: 8px;
     }
-
-    td {}
 }
+
+.sorting {
+    background-color: lighten($color5, 37%);
+
+    &::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-left: 20px solid transparent;
+        border-right: 20px solid transparent;
+        border-top: 20px solid lighten($color5, 37%);
+        position: relative;
+        top: 50px;
+        left: 38%;
+    }
+}
+
 
 footer {
     background-color: lighten($color2, 10%);

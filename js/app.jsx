@@ -19,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function() {
             this.state = {
                 sort: false,
                 sortRecent:true,
+                classRecent:"sorting",
+                classAll: "none",
             }
         }
 
@@ -39,19 +41,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         handleClick = (e) => {
             e.preventDefault();
+            const recent = this.recentTh;
+            const all = this.allTimeTh;
+
+
             if(this.state.sort === false){
                 this.setState({
                     sort: true,
                     sortRecent: false,
+                    classRecent:"none",
+                    classAll: "sorting",
                 });
             }else{
                 this.setState({
                     sort: false,
                     sortRecent: true,
+                    classRecent:"sorting",
+                    classAll: "none",
                 });
             }
 
         }
+
+
 
         render() {
 
@@ -60,9 +72,9 @@ document.addEventListener('DOMContentLoaded', function() {
                      <th>#</th>
                      <th></th>
                      <th>Name</th>
-                     <th className= "recent-th"
+                     <th   className = {this.state.classRecent}
                          onClick={this.handleClick}>Points in past 30days</th>
-                     <th className= "all-time-th"
+                     <th className = {this.state.classAll}
                          onClick={this.handleClick}>All time points</th>
                       <th></th>
                 </tr>
@@ -121,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
                 this.setState({
                     leaders: sortedAllPoints,
+
                 });
         }
 
@@ -136,7 +149,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         }
 
-        setStateFunction = (recent, alltime)=>{
+        setStateFunction = (recent, alltime, thClassName)=>{
             if(recent === true && alltime === false){
                 this.sortRecent(recent);
             }else if(recent === false && alltime === true){
